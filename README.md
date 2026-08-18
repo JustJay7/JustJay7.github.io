@@ -1,3 +1,1 @@
-Portfolio site template
-
-Generated with Claude Code
+Portfolio Site
