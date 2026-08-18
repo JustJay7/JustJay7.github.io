@@ -79,6 +79,8 @@
   @media (max-width:740px){ .about-grid{ grid-template-columns:1fr; } }
   .about p{ color:var(--muted); margin-bottom:16px; }
   .about p strong{ color:var(--text); font-weight:600; }
+  .side{ display:flex; flex-direction:column; gap:20px; }
+  .photo{ width:100%; aspect-ratio:1/1; object-fit:cover; border-radius:var(--radius); border:1px solid var(--line); display:block; }
   .facts{ background:var(--ink-2); border:1px solid var(--line); border-radius:var(--radius); padding:22px; }
   .facts .row{ display:flex; justify-content:space-between; gap:14px; padding:9px 0; border-bottom:1px dashed var(--line); font-size:.88rem; }
   .facts .row:last-child{ border-bottom:none; }
@@ -190,6 +192,8 @@
         <p>I also write. My in-progress paper, <strong>OI-Bench</strong>, proposes a standard way to benchmark organoid-intelligence systems — an emerging "wetware computing" area that has no shared way to measure results yet.</p>
         <p>Right now I'm at McGill for a <strong>Master of Management Analytics</strong>, adding the business and data side to the engineering. I like clean systems, honest documentation, and shipping over polishing forever.</p>
       </div>
+      <div class="side">
+      <img class="photo" src="profile.jpg" alt="Jay Malhotra" />
       <div class="facts" aria-label="Quick facts">
         <div class="row"><span class="k">location</span><span class="v">Montreal, QC</span></div>
         <div class="row"><span class="k">role</span><span class="v">Co-founder, Ayebot</span></div>
@@ -197,6 +201,7 @@
         <div class="row"><span class="k">degree</span><span class="v">BCA, AI (2023–2026)</span></div>
         <div class="row"><span class="k">focus</span><span class="v">RAG · LLMs · Analytics</span></div>
         <div class="row"><span class="k">status</span><span class="v" style="color:var(--accent)">open to roles</span></div>
+      </div>
       </div>
     </div>
   </div>
