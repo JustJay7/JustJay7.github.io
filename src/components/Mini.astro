@@ -1,0 +1,151 @@
+---
+// One small picture per project for the work list. Each one shows the project's
+// actual result, drawn in HTML and CSS so it stays sharp and weighs nothing.
+interface Props {
+  slug: string;
+}
+const { slug } = Astro.props;
+---
+
+{
+  slug === 'asof' && (
+    <div class="mv mv-asof" aria-hidden="true">
+      <div class="mv-cap">Same AI answer, two customer dates</div>
+      <div class="mv-time">
+        <span class="seg">
+          <em class="mono">policy v1</em>
+          <b class="pin warn" style="--x:56%" />
+        </span>
+        <span class="seg">
+          <em class="mono">policy v2</em>
+          <b class="pin ok" style="--x:44%" />
+        </span>
+      </div>
+      <div class="mv-two">
+        <span>
+          <em class="mono">10 Mar</em>
+          <strong class="v warn">
+            <i class="dot warn" />
+            corrected
+          </strong>
+        </span>
+        <span>
+          <em class="mono">2 Jun</em>
+          <strong class="v ok">
+            <i class="dot" />
+            released
+          </strong>
+        </span>
+      </div>
+    </div>
+  )
+}
+
+{
+  slug === 'perfect-pair' && (
+    <div class="mv mv-steps" aria-hidden="true">
+      <div class="mv-cap">The model proposes, the server decides</div>
+      <div class="steps">
+        <span>
+          <em class="mono">Claude</em>
+          <strong>proposes a refund</strong>
+        </span>
+        <span>
+          <em class="mono">Server</em>
+          <strong>checks approval</strong>
+        </span>
+        <span class="done">
+          <em class="mono">Action</em>
+          <strong>runs, and is replayable</strong>
+        </span>
+      </div>
+    </div>
+  )
+}
+
+{
+  slug === 'skillguard' && (
+    <div class="mv mv-lanes" aria-hidden="true">
+      <div class="mv-cap">One unsafe skill, judged two ways</div>
+      <div class="ln">
+        <span>
+          <strong>Static scan</strong>
+          <em class="mono">risk 7 of 100</em>
+        </span>
+        <strong class="v none">
+          <i class="dot hollow" />
+          rated safe
+        </strong>
+      </div>
+      <div class="ln">
+        <span>
+          <strong>Sandbox run</strong>
+          <em class="mono">13 private reads denied</em>
+        </span>
+        <strong class="v stop">
+          <i class="dot stop" />
+          blocked
+        </strong>
+      </div>
+    </div>
+  )
+}
+
+{
+  slug === 'olist-late-delivery' && (
+    <div class="mv mv-bars" aria-hidden="true">
+      <div class="mv-cap">Late orders caught by checking 10% a day</div>
+      <div class="b">
+        <em class="mono">random</em>
+        <span>
+          <i style="--v:10" />
+        </span>
+        <b class="mono">10%</b>
+      </div>
+      <div class="b">
+        <em class="mono">baseline</em>
+        <span>
+          <i style="--v:33.6" />
+        </span>
+        <b class="mono">33.6%</b>
+      </div>
+      <div class="b best">
+        <em class="mono">model</em>
+        <span>
+          <i style="--v:36" />
+        </span>
+        <b class="mono">36%</b>
+      </div>
+    </div>
+  )
+}
+
+{
+  slug === 'ayebot' && (
+    <div class="mv mv-surf" aria-hidden="true">
+      <div class="mv-cap">Three surfaces in production</div>
+      <div class="surf">
+        <span class="phone">
+          <i />
+          <i />
+          <i class="me" />
+        </span>
+        <span class="browser">
+          <i />
+          <i />
+          <i />
+        </span>
+        <span class="server">
+          <i />
+          <i />
+          <i />
+        </span>
+      </div>
+      <div class="mv-three mono">
+        <span>Flutter app</span>
+        <span>Next.js dashboard</span>
+        <span>Backend</span>
+      </div>
+    </div>
+  )
+}

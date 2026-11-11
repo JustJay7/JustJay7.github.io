@@ -1,0 +1,61 @@
+---
+// "From the model to the app", drawn as an actual line. Each station is a layer
+// of the stack with the tools I use there and the project that shows it.
+const stations = [
+  {
+    tone: 'ok',
+    title: 'Model',
+    tools: ['LangGraph', 'LangChain', 'RAG', 'scikit-learn', 'YOLO, U-Net'],
+    proof: [
+      { label: 'AsOf', href: '/work/asof/' },
+      { label: 'SkillGuard', href: '/work/skillguard/' },
+    ],
+  },
+  {
+    tone: 'warn',
+    title: 'Data',
+    tools: ['IBM Db2', 'PostgreSQL', 'SQL Server', 'pandas', 'Vector search'],
+    proof: [{ label: 'Olist late deliveries', href: '/work/olist-late-delivery/' }],
+  },
+  {
+    tone: 'stop',
+    title: 'API',
+    tools: ['FastAPI', 'Django', 'Flask', 'Node.js', 'AWS Bedrock'],
+    proof: [{ label: 'Perfect Pair', href: '/work/perfect-pair/' }],
+  },
+  {
+    tone: 'ink',
+    title: 'App',
+    tools: ['Flutter', 'Next.js', 'Admin dashboards', 'Encrypted chat'],
+    proof: [{ label: 'Ayebot', href: '/work/ayebot/' }],
+  },
+];
+---
+
+<div class="rail">
+  <div class="rail-line" aria-hidden="true"><i></i><i></i><i></i></div>
+  <ol>
+    {
+      stations.map((s, i) => (
+        <li class={`st ${s.tone}`} style={`--i:${i}`}>
+          <span class="node" aria-hidden="true" />
+          <h2>{s.title}</h2>
+          <ul class="mono">
+            {s.tools.map((t) => (
+              <li>{t}</li>
+            ))}
+          </ul>
+          <p class="proof">
+            <span class="label">Seen in</span>
+            {s.proof.map((p) => (
+              <a href={p.href}>{p.label}</a>
+            ))}
+          </p>
+        </li>
+      ))
+    }
+  </ol>
+  <p class="rail-foot muted">
+    Written in Python, SQL, JavaScript and C#. Shipped with Docker, Git, AWS and Google Cloud.
+  </p>
+</div>

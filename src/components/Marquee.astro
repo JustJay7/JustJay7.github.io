@@ -1,0 +1,26 @@
+---
+// Two slow rows of everything in the stack, moving in opposite directions.
+// Decorative, so it is hidden from screen readers; the same tools are listed in the rail.
+const rowA = ['Python', 'LangGraph', 'RAG', 'IBM Db2', 'FastAPI', 'Flutter', 'Docker', 'scikit-learn', 'PostgreSQL', 'AWS Bedrock', 'Next.js', 'LLMs', 'SQL', 'AI agents'];
+const rowB = ['LangChain', 'pandas', 'Django', 'Vector search', 'YOLO', 'Node.js', 'Google Cloud', 'U-Net', 'SQL Server', 'Flask', 'NLP', 'Git', 'JavaScript', 'Deep learning'];
+const tones = ['ok', 'warn', 'stop'];
+---
+
+<div class="marquee" aria-hidden="true">
+  {
+    [rowA, rowB].map((row, r) => (
+      <div class={`mq-row ${r ? 'rev' : ''}`}>
+        {[0, 1].map(() => (
+          <div class="mq-track">
+            {row.map((w, i) => (
+              <span>
+                <i class={`dot ${tones[(i + r) % 3] === 'ok' ? '' : tones[(i + r) % 3]}`} />
+                {w}
+              </span>
+            ))}
+          </div>
+        ))}
+      </div>
+    ))
+  }
+</div>

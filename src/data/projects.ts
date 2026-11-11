@@ -1,4 +1,4 @@
-// One entry per case study. The home page ledger and the /work/<slug>/ pages
+// One entry per case study. The home page work list and the /work/<slug>/ pages
 // are both generated from this list, so adding a project means adding an entry.
 
 export type Tone = 'ok' | 'warn';
@@ -6,7 +6,7 @@ export type Tone = 'ok' | 'warn';
 export type Project = {
   slug: string;
   title: string;
-  tagline: string; // one line, shown in the ledger
+  tagline: string; // one line, shown on the work plate
   summary: string; // one or two sentences, shown at the top of the case study
   when: string;
   builtFor: string;

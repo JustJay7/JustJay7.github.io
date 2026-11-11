@@ -1,0 +1,31 @@
+---
+// The work list. Each project is a large plate: what it is, who it was for,
+// the outcome, and a small picture of the result. The whole plate is one link.
+import { projects } from '../data/projects';
+import Mini from './Mini.astro';
+---
+
+<div class="plates">
+  {
+    projects.map((p) => (
+      <a class={`plate tone-${p.tone}`} href={`/work/${p.slug}/`}>
+        <div class="plate-meta">
+          <span class="mono">{p.when}</span>
+          <span>{p.builtFor}</span>
+        </div>
+        <div class="plate-main">
+          <h3>{p.title}</h3>
+          <p>{p.tagline}</p>
+          <span class="outcome">
+            <i class:list={['dot', { warn: p.tone === 'warn' }]} />
+            <span class="mono">{p.outcome}</span>
+          </span>
+          <span class="more">Read the case study</span>
+        </div>
+        <div class="plate-vis">
+          <Mini slug={p.slug} />
+        </div>
+      </a>
+    ))
+  }
+</div>

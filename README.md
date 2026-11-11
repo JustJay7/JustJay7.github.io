@@ -1,6 +1,6 @@
 # jay malhotra, portfolio site
 
-Source for my portfolio at https://justjay7.github.io. Built with [Astro](https://astro.build) as a static site: every page is plain HTML and CSS, and the only JavaScript is the theme toggle and the AsOf demo.
+Source for my portfolio at https://justjay7.github.io. Built with [Astro](https://astro.build) as a static site: every page is plain HTML and CSS, with a few lines of JavaScript for the theme toggle, the AsOf demo and the scroll reveal.
 
 ## Run it locally
 
@@ -14,9 +14,9 @@ npm run dev
 | Path | What it holds |
 |---|---|
 | `src/data/site.ts` | Name, headline, links, experience, education, stack |
-| `src/data/projects.ts` | One entry per case study. The home page ledger and the `/work/<slug>/` pages are generated from it |
+| `src/data/projects.ts` | One entry per case study. The home page work list and the `/work/<slug>/` pages are generated from it |
 | `src/pages/` | Home page, case-study template, 404 |
-| `src/components/` | The work ledger, the AsOf date demo, case-study illustrations |
+| `src/components/` | The hero rail, the work plates and their small illustrations, the AsOf date demo, the stack marquee |
 | `src/styles/global.css` | All styling, with dark and light themes as CSS variables |
 | `public/` | Headshot, favicon, social card |
 | `tools/make_og.py` | Regenerates the social card (`public/og.png`) |

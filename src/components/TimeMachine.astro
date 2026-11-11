@@ -85,6 +85,7 @@ const split = ((changeDay / days) * 100).toFixed(2) + '%';
       q('[data-version]').textContent = v.name;
       q('[data-clause]').textContent = v.clause;
       q('[data-final]').textContent = v.final;
+      root.dataset.tone = v.tone; // the panel's glow takes the verdict's colour
       const verdict = q('[data-verdict]');
       verdict.className = 'verdict ' + v.tone;
       verdict.innerHTML = '<span class="dot' + (v.tone === 'warn' ? ' warn' : '') + '"></span>' + v.verdict;
