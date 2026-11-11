@@ -1583,3 +1583,46 @@ pre {
     grid-row: 2;
   }
 }
+
+/* Gallery of real footage and screenshots on case-study pages */
+.gallery {
+  display: grid;
+  gap: 1.25rem;
+}
+.gallery .frame {
+  border: 1px solid var(--rule);
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--surface);
+  box-shadow: 0 24px 60px -34px rgb(0 0 0 / 0.55);
+}
+.gallery img,
+.gallery video {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.gallery a {
+  display: block;
+}
+.g-rest {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+@media (max-width: 40rem) {
+  .g-rest {
+    grid-template-columns: 1fr;
+  }
+}
+.g-rest.one {
+  grid-template-columns: 1fr;
+}
+.case-media {
+  padding-block: clamp(1.75rem, 4vw, 3rem) 0;
+  max-width: 64rem;
+}
+.case-media > h2 {
+  font-size: clamp(1.5rem, 2.6vw, 2rem);
+  margin-bottom: 1rem;
+}

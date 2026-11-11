@@ -1,0 +1,75 @@
+---
+// Real footage and screenshots for a case study. The first item is shown large;
+// clips are muted loops that only play while they are on screen.
+import type { Media } from '../data/projects';
+
+interface Props {
+  items: Media[];
+}
+const { items } = Astro.props;
+const [lead, ...rest] = items;
+---
+
+<div class="gallery">
+  {
+    [lead].map((m) => (
+      <figure class="g-lead">
+        <div class="frame">
+          {m.kind === 'video' ? (
+            <video muted loop playsinline preload="none" poster={m.poster} width={m.w} height={m.h} aria-label={m.alt} data-loop>
+              <source src={m.src} type="video/mp4" />
+            </video>
+          ) : (
+            <a href={m.src}>
+              <img src={m.src} alt={m.alt} width={m.w} height={m.h} loading="lazy" decoding="async" />
+            </a>
+          )}
+        </div>
+        <figcaption>{m.caption}</figcaption>
+      </figure>
+    ))
+  }
+  {
+    rest.length > 0 && (
+      <div class:list={['g-rest', { one: rest.length === 1 }]}>
+        {rest.map((m) => (
+          <figure>
+            <div class="frame">
+              {m.kind === 'video' ? (
+                <video muted loop playsinline preload="none" poster={m.poster} width={m.w} height={m.h} aria-label={m.alt} data-loop>
+                  <source src={m.src} type="video/mp4" />
+                </video>
+              ) : (
+                <a href={m.src}>
+                  <img src={m.src} alt={m.alt} width={m.w} height={m.h} loading="lazy" decoding="async" />
+                </a>
+              )}
+            </div>
+            <figcaption>{m.caption}</figcaption>
+          </figure>
+        ))}
+      </div>
+    )
+  }
+</div>
+
+<script>
+  // Play each clip only while it is visible, and not at all if the visitor prefers reduced motion.
+  const calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const clips = document.querySelectorAll<HTMLVideoElement>('video[data-loop]');
+  if (calm) {
+    clips.forEach((v) => (v.controls = true));
+  } else {
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          const v = e.target as HTMLVideoElement;
+          if (e.isIntersecting) v.play().catch(() => (v.controls = true));
+          else v.pause();
+        }
+      },
+      { threshold: 0.35 },
+    );
+    clips.forEach((v) => io.observe(v));
+  }
+</script>

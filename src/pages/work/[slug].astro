@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import Visual from '../../components/Visual.astro';
+import Gallery from '../../components/Gallery.astro';
 import { projects } from '../../data/projects';
 
 export function getStaticPaths() {
@@ -36,9 +37,22 @@ const { project: p, next } = Astro.props;
       }
     </dl>
 
-    <div class="case-vis">
-      <Visual project={p} />
-    </div>
+    {
+      p.visual !== 'none' && (
+        <div class="case-vis">
+          <Visual project={p} />
+        </div>
+      )
+    }
+
+    {
+      p.media && (
+        <div class="case-media">
+          <h2>{p.mediaTitle ?? 'In action'}</h2>
+          <Gallery items={p.media} />
+        </div>
+      )
+    }
 
     <div class="case-body">
       {

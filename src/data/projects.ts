@@ -3,6 +3,16 @@
 
 export type Tone = 'ok' | 'warn';
 
+export type Media = {
+  kind: 'video' | 'image';
+  src: string;
+  poster?: string; // still frame shown before a clip plays
+  w: number; // intrinsic size, so the page reserves the space before the file loads
+  h: number;
+  alt: string;
+  caption: string;
+};
+
 export type Project = {
   slug: string;
   title: string;
@@ -19,7 +29,9 @@ export type Project = {
   results: string[];
   limits: string[];
   links: { label: string; href: string }[];
-  visual: 'timemachine' | 'skillguard' | 'bars' | 'flow';
+  visual: 'timemachine' | 'skillguard' | 'bars' | 'flow' | 'none';
+  mediaTitle?: string;
+  media?: Media[];
   flow?: { caption: string; steps: { title: string; items: string[] }[] };
 };
 
@@ -77,6 +89,33 @@ ORDER BY DIST FETCH EXACT FIRST ? ROWS ONLY`,
       { label: 'Code on GitHub', href: 'https://github.com/JustJay7/asof' },
       { label: 'Demo video (2:58)', href: 'https://www.youtube.com/watch?v=mntehVWQn8E' },
     ],
+    media: [
+      {
+        kind: 'video',
+        src: '/media/asof-tour.mp4',
+        w: 1120,
+        h: 700,
+        poster: '/media/asof-tour.webp',
+        alt: 'Screens from the AsOf app: answer check, policy timeline, audit ledger and customer chat',
+        caption: 'The real app: the answer check, the policy timeline, the audit ledger and the customer chat.',
+      },
+      {
+        kind: 'image',
+        src: '/media/asof-two-dates.webp',
+        w: 1600,
+        h: 336,
+        alt: 'The same draft checked for 10 March 2026 and 2 June 2026',
+        caption: 'The same draft on two dates: corrected under version 1, released under version 2.',
+      },
+      {
+        kind: 'image',
+        src: '/media/asof-chat.webp',
+        w: 1400,
+        h: 875,
+        alt: 'A customer chat with AsOf checking each reply behind the scenes',
+        caption: 'The customer-facing chat, with the check running behind it.',
+      },
+    ],
     visual: 'timemachine',
   },
   {
@@ -114,6 +153,26 @@ ORDER BY DIST FETCH EXACT FIRST ? ROWS ONLY`,
       'Role switching is a demonstration control, not real authentication.',
     ],
     links: [{ label: 'Code on GitHub', href: 'https://github.com/JustJay7/perfect-pair' }],
+    media: [
+      {
+        kind: 'video',
+        src: '/media/perfect-pair-run.mp4',
+        w: 1120,
+        h: 700,
+        poster: '/media/perfect-pair-run.webp',
+        alt: 'Perfect Pair handling a return: the customer phone view beside the agent trace',
+        caption:
+          "A return handled end to end in scripted demo mode. The customer's phone is on the left; the agent's plan, tool calls and safety checks are on the right.",
+      },
+      {
+        kind: 'image',
+        src: '/media/perfect-pair-receipt.webp',
+        w: 1280,
+        h: 800,
+        alt: 'The value receipt and outcome explanation shown to staff',
+        caption: 'The value receipt and the reason for the outcome. Staff see this; the customer does not.',
+      },
+    ],
     visual: 'flow',
     flow: {
       caption: 'The model proposes. The server decides what actually runs.',
@@ -163,6 +222,25 @@ ORDER BY DIST FETCH EXACT FIRST ? ROWS ONLY`,
       { label: 'Code on GitHub', href: 'https://github.com/JustJay7/skillguard' },
       { label: 'Demo video (2:44)', href: 'https://youtu.be/eZ9NVyEEMAI' },
     ],
+    media: [
+      {
+        kind: 'video',
+        src: '/media/skillguard-walkthrough.mp4',
+        w: 1120,
+        h: 700,
+        poster: '/media/skillguard-walkthrough.webp',
+        alt: 'The SkillGuard walkthrough stepping through its four stages',
+        caption: 'The recorded walkthrough: catch the change, watch the agent, review the boundary, keep control.',
+      },
+      {
+        kind: 'image',
+        src: '/media/skillguard-watch.webp',
+        w: 1400,
+        h: 896,
+        alt: 'Evidence from a sandbox run: the injected instruction and what the agent actually did',
+        caption: 'Evidence from the sandbox run: the injected instruction, and what the agent actually did.',
+      },
+    ],
     visual: 'skillguard',
   },
   {
@@ -201,7 +279,75 @@ ORDER BY DIST FETCH EXACT FIRST ? ROWS ONLY`,
       'No single feature is strong, and lateness comes in system-wide waves that the model cannot see coming.',
     ],
     links: [{ label: 'Code on GitHub', href: 'https://github.com/JustJay7/olist-late-delivery' }],
+    mediaTitle: 'From the analysis',
+    media: [
+      {
+        kind: 'image',
+        src: '/media/olist-budget-curves.webp',
+        w: 1400,
+        h: 492,
+        alt: 'Precision-recall curve and recall at each review budget on the test set',
+        caption: 'Precision-recall, and the share of late orders caught at each review budget, on the test set.',
+      },
+      {
+        kind: 'image',
+        src: '/media/olist-heatmap.webp',
+        w: 1332,
+        h: 744,
+        alt: 'Heatmap of late rate by seller-to-customer distance and promised delivery window',
+        caption: 'Late rate by distance and promised window. Far away with a short promise is the riskiest corner.',
+      },
+    ],
     visual: 'bars',
+  },
+  {
+    slug: 'kidneystone-x',
+    title: 'KidneyStone-X',
+    tagline: 'Finds kidney stones on CT scans and outlines the kidney around them.',
+    summary:
+      'A computer vision pipeline that detects kidney stones on CT slices with YOLOv8, outlines the kidney with a U-Net, and shows which pixels drove each detection.',
+    when: 'Nov 2025',
+    builtFor: 'Bennett University course project, team of three',
+    outcome: 'mAP@0.5 of 0.965 on validation',
+    tone: 'ok',
+    facts: [
+      { label: 'Role', value: 'Team of three' },
+      { label: 'Context', value: 'CBCA 241 Image and Video Processing, Bennett University, November 2025' },
+      { label: 'Stack', value: 'PyTorch, Ultralytics YOLOv8, U-Net, OpenCV' },
+      { label: 'Outcome', value: 'Detector precision 0.923, recall 0.914, mAP@0.5 0.965 on validation.' },
+    ],
+    problem: [
+      'A kidney stone on a CT slice is a few bright pixels. Bone is bright too, and the spine sits a few centimetres away. A detector has to tell them apart.',
+    ],
+    built: [
+      'A ResNet18 stone or no-stone classifier as a sanity check on the data. It reached 99.65% validation accuracy, which confirmed the signal was there before we invested in detection.',
+      'A YOLOv8 detector that boxes each stone.',
+      'A U-Net that outlines the kidney region, to give each detection anatomical context.',
+      'A quantification step that writes stone measurements for each image to a CSV.',
+      'Occlusion-sensitivity heatmaps for explainability, after Grad-CAM and SHAP proved a poor fit for this task.',
+    ],
+    results: [
+      'Detector on validation: precision 0.923, recall 0.914, mAP@0.5 0.965, mAP@[0.5 to 0.95] 0.897.',
+      'Kidney segmentation: mean Dice 0.84 and mean IoU 0.78 on a small curated set.',
+      'The first detector confidently boxed vertebrae as stones, because the automatic labels had treated bright bone as stone. We fixed it by labelling 185 images by hand and using them as ground truth.',
+    ],
+    limits: [
+      'The validation split comes from the same curated subset as the training data, so the headline scores mostly measure label consistency. The stricter mAP@[0.5 to 0.95] of 0.897 is the more honest number.',
+      'It has not been tested on scans from another hospital, and it is not a clinical tool.',
+    ],
+    links: [{ label: 'Code on GitHub', href: 'https://github.com/JustJay7/KidneyStone-X' }],
+    mediaTitle: 'Detections',
+    media: [
+      {
+        kind: 'image',
+        src: '/media/kidneystone-detections.webp',
+        w: 950,
+        h: 589,
+        alt: 'CT slices with detected kidney stones boxed',
+        caption: 'Stones boxed on validation CT slices.',
+      },
+    ],
+    visual: 'none',
   },
   {
     slug: 'ayebot',
