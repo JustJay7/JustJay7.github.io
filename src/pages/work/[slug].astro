@@ -1,0 +1,109 @@
+---
+import Base from '../../layouts/Base.astro';
+import Visual from '../../components/Visual.astro';
+import { projects } from '../../data/projects';
+
+export function getStaticPaths() {
+  return projects.map((project, i) => ({
+    params: { slug: project.slug },
+    props: { project, next: projects[(i + 1) % projects.length] },
+  }));
+}
+
+const { project: p, next } = Astro.props;
+
+const visualHeading = {
+  timemachine: 'Try it',
+  skillguard: 'What it caught',
+  bars: 'In one chart',
+  flow: 'How it fits together',
+}[p.visual];
+---
+
+<Base title={p.title} description={p.summary}>
+  <article class="wrap">
+    <header class="case-head">
+      <a class="back" href="/#work">Back to all work</a>
+      <h1>{p.title}</h1>
+      <p class="lede">{p.summary}</p>
+    </header>
+
+    <dl class="facts">
+      {
+        p.facts.map((f) => (
+          <div>
+            <dt>{f.label}</dt>
+            <dd>{f.value}</dd>
+          </div>
+        ))
+      }
+    </dl>
+
+    <div class="case-body">
+      {
+        p.problem && (
+          <>
+            <h2>The problem</h2>
+            <div>
+              {p.problem.map((t) => (
+                <p>{t}</p>
+              ))}
+            </div>
+          </>
+        )
+      }
+
+      <h2>What I built</h2>
+      <div>
+        <ul>
+          {p.built.map((t) => <li>{t}</li>)}
+        </ul>
+      </div>
+
+      <h2>{visualHeading}</h2>
+      <div>
+        <Visual project={p} />
+        {
+          p.code && (
+            <figure style="margin-top:1.5rem">
+              <pre><code>{p.code.text}</code></pre>
+              <figcaption>{p.code.caption}</figcaption>
+            </figure>
+          )
+        }
+      </div>
+
+      <h2>Results</h2>
+      <div>
+        <ul class="results">
+          {p.results.map((t) => <li>{t}</li>)}
+        </ul>
+      </div>
+
+      <h2>Limits</h2>
+      <div>
+        {p.limits.map((t) => <p>{t}</p>)}
+      </div>
+
+      {
+        p.links.length > 0 && (
+          <>
+            <h2>See it</h2>
+            <div class="links">
+              {p.links.map((l, i) => (
+                <a class:list={['btn', { primary: i === 0 }]} href={l.href}>
+                  {l.label}
+                </a>
+              ))}
+            </div>
+          </>
+        )
+      }
+    </div>
+
+    <nav class="next" aria-label="More work">
+      <a href="/#work">All work</a>
+      <a href={`/work/${next.slug}/`}>Next: {next.title}</a>
+    </nav>
+  </article>
+</Base>

@@ -1,0 +1,106 @@
+---
+import '@fontsource-variable/bricolage-grotesque/wdth.css';
+import '@fontsource-variable/martian-mono/wdth.css';
+import '../styles/global.css';
+import { site } from '../data/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title, description = site.description } = Astro.props;
+const pageTitle = title ? `${title} | ${site.name}` : `${site.name} | ${site.role}`;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImage = new URL('/og.png', Astro.site);
+
+// Tells search engines who this page is about and which profiles belong to the same person.
+const person = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: site.name,
+  jobTitle: site.role,
+  url: Astro.site,
+  email: `mailto:${site.email}`,
+  sameAs: [site.github, site.linkedin],
+  alumniOf: [
+    { '@type': 'CollegeOrUniversity', name: 'McGill University' },
+    { '@type': 'CollegeOrUniversity', name: 'Bennett University' },
+  ],
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta name="theme-color" content="#0d1117" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <script type="application/ld+json" set:html={JSON.stringify(person)} />
+
+    <!-- Runs before first paint so a saved theme choice never flashes the wrong colours. -->
+    <script is:inline>
+      try {
+        var saved = localStorage.getItem('theme');
+        if (saved === 'light' || saved === 'dark') document.documentElement.dataset.theme = saved;
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <header class="wrap site-head">
+      <a class="home" href="/">{site.name}</a>
+      <nav aria-label="Main">
+        <a href="/#work">Work</a>
+        <a class="hide-s" href="/#experience">Experience</a>
+        <a class="hide-s" href="/#about">About</a>
+        <a href="/#contact">Contact</a>
+        <button class="theme" type="button" aria-label="Switch between dark and light theme">
+          <svg viewBox="0 0 16 16" aria-hidden="true">
+            <circle cx="8" cy="8" r="6.25" fill="none" stroke="currentColor" stroke-width="1.5"></circle>
+            <path d="M8 1.75a6.25 6.25 0 0 1 0 12.5z" fill="currentColor"></path>
+          </svg>
+        </button>
+      </nav>
+    </header>
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <footer class="wrap site-foot">
+      <span>{site.name}, {new Date().getFullYear()}</span>
+      <span>
+        Built with Astro. <a href={site.repo}>Source on GitHub</a>.
+      </span>
+    </footer>
+
+    <script is:inline>
+      document.querySelector('.theme').addEventListener('click', function () {
+        var root = document.documentElement;
+        var current =
+          root.dataset.theme || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+        var next = current === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try {
+          localStorage.setItem('theme', next);
+        } catch (e) {}
+      });
+    </script>
+  </body>
+</html>

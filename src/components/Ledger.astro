@@ -1,0 +1,33 @@
+---
+import { projects } from '../data/projects';
+
+interface Props {
+  write?: boolean; // play the one-time write-in animation
+}
+const { write = false } = Astro.props;
+---
+
+<div class:list={['ledger', { write }]}>
+  <div class="ledger-head" aria-hidden="true">
+    <span>When</span>
+    <span>Project</span>
+    <span>Built for</span>
+    <span>Outcome</span>
+  </div>
+  {
+    projects.map((p, i) => (
+      <a href={`/work/${p.slug}/`} style={`--i:${i}`}>
+        <span class="when mono">{p.when}</span>
+        <span class="proj">
+          <strong>{p.title}</strong>
+          <span>{p.tagline}</span>
+        </span>
+        <span class="for">{p.builtFor}</span>
+        <span class="out">
+          <span class:list={['dot', { warn: p.tone === 'warn' }]} />
+          <span class="mono">{p.outcome}</span>
+        </span>
+      </a>
+    ))
+  }
+</div>

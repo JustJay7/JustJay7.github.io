@@ -1,0 +1,106 @@
+---
+// Picks the right illustration for a case study.
+import type { Project } from '../data/projects';
+import TimeMachine from './TimeMachine.astro';
+
+interface Props {
+  project: Project;
+}
+const { project: p } = Astro.props;
+---
+
+{
+  p.visual === 'timemachine' && (
+    <figure>
+      <TimeMachine />
+      <figcaption>
+        Drag the date. The draft never changes, but the right answer does. Simplified from AsOf's demo data, a fictional
+        airline's customer service plan.
+      </figcaption>
+    </figure>
+  )
+}
+
+{
+  p.visual === 'skillguard' && (
+    <figure>
+      <div class="panel">
+        <span class="label">Skill under review</span>
+        <p>
+          <strong>A receipt organizer that also tries to read a private file.</strong>
+        </p>
+        <div class="lanes" style="margin-top:1rem">
+          <div class="lane">
+            <strong>Static scanner</strong>
+            <span class="verdict none">
+              <span class="dot hollow" />
+              rated safe
+            </span>
+            <span class="mono">risk score 7 of 100</span>
+          </div>
+          <div class="lane">
+            <strong>SkillGuard sandbox run</strong>
+            <span class="verdict stop">
+              <span class="dot stop" />
+              blocked
+            </span>
+            <span class="mono">12 of 12 receipt tasks correct, 13 private-file reads denied</span>
+          </div>
+        </div>
+      </div>
+      <figcaption>Two ways of judging the same skill. Only one of them watched it run.</figcaption>
+    </figure>
+  )
+}
+
+{
+  p.visual === 'bars' && (
+    <figure>
+      <div class="panel bars">
+        <span class="label">Share of late orders caught by checking 10% of orders a day (test period)</span>
+        <div class="bar">
+          <span>Random checks</span>
+          <div class="track">
+            <i style="--v:10" />
+          </div>
+          <b>10%</b>
+        </div>
+        <div class="bar">
+          <span>Two-feature baseline</span>
+          <div class="track">
+            <i style="--v:33.6" />
+          </div>
+          <b>33.6%</b>
+        </div>
+        <div class="bar best">
+          <span>Final model</span>
+          <div class="track">
+            <i style="--v:36" />
+          </div>
+          <b>36%</b>
+        </div>
+      </div>
+      <figcaption>The model more than triples random checks. Most of that gain comes from two features.</figcaption>
+    </figure>
+  )
+}
+
+{
+  p.visual === 'flow' && p.flow && (
+    <figure>
+      <div class="flow">
+        {p.flow.steps.map((s) => (
+          <div>
+            <h3>{s.title}</h3>
+            <ul class="mono">
+              {s.items.map((it) => (
+                <li>{it}</li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+      <figcaption>{p.flow.caption}</figcaption>
+    </figure>
+  )
+}

@@ -1,0 +1,105 @@
+---
+// A ten-second demo of AsOf's core idea, using the real clause from its demo data:
+// BRV-002 of a fictional airline's customer service plan. Version 1 applied from
+// 1 January 2026, version 2 from 1 May 2026. Everything runs in the browser.
+const start = Date.UTC(2026, 0, 1);
+const end = Date.UTC(2026, 6, 31);
+const change = Date.UTC(2026, 4, 1);
+const day = 86400000;
+const days = (end - start) / day;
+const changeDay = (change - start) / day;
+const split = ((changeDay / days) * 100).toFixed(2) + '%';
+---
+
+<div class="panel tm" data-tm data-start={start} data-change-day={changeDay} style={`--split:${split}`}>
+  <div class="tm-top">
+    <div>
+      <span class="label">Customer's date</span>
+      <div class="tm-date" data-date>10 March 2026</div>
+    </div>
+    <div class="tm-jump">
+      <button type="button" data-jump="68">10 March 2026</button>
+      <button type="button" data-jump="152">2 June 2026</button>
+    </div>
+  </div>
+
+  <div>
+    <div class="tm-line">
+      <div class="tm-names mono" aria-hidden="true"><span>BRV-002 v1</span><span>BRV-002 v2</span></div>
+      <div class="tm-versions" aria-hidden="true"><span data-v="1"></span><span data-v="2"></span></div>
+    </div>
+    <input type="range" min="0" max={days} value="68" step="1" aria-label="Customer's date, from 1 January to 31 July 2026" />
+  </div>
+
+  <div class="tm-grid">
+    <div>
+      <span class="label">AI draft, the same on every date</span>
+      <p>“Yes, you can still apply for a bereavement fare after your trip.”</p>
+    </div>
+    <div>
+      <span class="label">Policy in force on that date: <span data-version>BRV-002 v1</span></span>
+      <p data-clause></p>
+    </div>
+  </div>
+
+  <div class="tm-result" aria-live="polite">
+    <span class="verdict" data-verdict></span>
+    <p data-final></p>
+  </div>
+</div>
+
+<script>
+  const versions = [
+    {
+      name: 'BRV-002 v1',
+      clause:
+        'Bereavement fares must be requested before travel begins. A bereavement fare cannot be applied retroactively once any part of the journey has been flown.',
+      tone: 'warn',
+      verdict: 'contradicted, so corrected',
+      final:
+        'AsOf rewrites the answer from the policy text: a bereavement fare has to be requested before travel begins.',
+    },
+    {
+      name: 'BRV-002 v2',
+      clause:
+        'Bereavement fares may be requested before travel or retroactively. A retroactive request must be submitted within 90 days of the date the original ticket was issued.',
+      tone: 'ok',
+      verdict: 'supported, so released',
+      final: 'AsOf releases the answer as written, and records which clause version backed it.',
+    },
+  ];
+  const fmt = new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
+
+  document.querySelectorAll<HTMLElement>('[data-tm]').forEach((root) => {
+    const start = Number(root.dataset.start);
+    const changeDay = Number(root.dataset.changeDay);
+    const slider = root.querySelector<HTMLInputElement>('input[type=range]')!;
+    const q = (s: string) => root.querySelector<HTMLElement>(s)!;
+
+    function render() {
+      const d = Number(slider.value);
+      const v = versions[d < changeDay ? 0 : 1];
+      const date = fmt.format(new Date(start + d * 86400000));
+      q('[data-date]').textContent = date;
+      slider.setAttribute('aria-valuetext', date);
+      q('[data-version]').textContent = v.name;
+      q('[data-clause]').textContent = v.clause;
+      q('[data-final]').textContent = v.final;
+      const verdict = q('[data-verdict]');
+      verdict.className = 'verdict ' + v.tone;
+      verdict.innerHTML = '<span class="dot' + (v.tone === 'warn' ? ' warn' : '') + '"></span>' + v.verdict;
+      root.querySelectorAll<HTMLElement>('[data-v]').forEach((el) => {
+        el.classList.toggle('on', (el.dataset.v === '1') === d < changeDay);
+      });
+    }
+
+    slider.addEventListener('input', render);
+    root.querySelectorAll<HTMLButtonElement>('[data-jump]').forEach((b) =>
+      b.addEventListener('click', () => {
+        slider.value = b.dataset.jump!;
+        render();
+      }),
+    );
+    render();
+  });
+</script>

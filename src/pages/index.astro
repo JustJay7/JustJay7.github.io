@@ -1,0 +1,158 @@
+---
+import Base from '../layouts/Base.astro';
+import Ledger from '../components/Ledger.astro';
+import TimeMachine from '../components/TimeMachine.astro';
+import { site, experience, education, moreWork, stack } from '../data/site';
+---
+
+<Base>
+  <div class="wrap">
+    <section class="hero">
+      <div class="who">
+        <img src="/jay.jpg" alt="Jay Malhotra" width="112" height="112" />
+        <div>
+          <strong>{site.name}</strong>
+          <span>{site.role}</span>
+        </div>
+      </div>
+      <h1>{site.line}</h1>
+      <p class="lede">
+        {site.status}
+        <span class="muted">Studying for a Master of Management in Analytics at McGill.</span>
+      </p>
+      <div class="actions">
+        <a class="btn primary" href={`mailto:${site.email}`}>Email me</a>
+        <a class="btn" href={site.github}>GitHub</a>
+        <a class="btn" href={site.linkedin}>LinkedIn</a>
+      </div>
+    </section>
+
+    <section id="work">
+      <div class="sec-head">
+        <h2>Selected work</h2>
+        <p>Each row opens a short case study.</p>
+      </div>
+      <Ledger write />
+    </section>
+
+    <section>
+      <div class="sec-head">
+        <h2>Try the idea behind AsOf</h2>
+        <p><a href="/work/asof/">Read the case study</a></p>
+      </div>
+      <p class="muted" style="max-width:44rem;margin-bottom:1.25rem">
+        An AI assistant gives the same answer to two customers. Whether that answer is right depends on which version of
+        the policy applied on each customer's date. Drag the date to see it flip.
+      </p>
+      <TimeMachine />
+    </section>
+
+    <section id="experience">
+      <div class="two">
+        <div>
+          <div class="sec-head"><h2>Experience</h2></div>
+          <div class="rows">
+            {
+              experience.map((e) =>
+                e.href ? (
+                  <a href={e.href}>
+                    <strong>{e.org}</strong>
+                    <span class="when mono">{e.when}</span>
+                    <span class="sub">{e.role}</span>
+                  </a>
+                ) : (
+                  <div>
+                    <strong>{e.org}</strong>
+                    <span class="when mono">{e.when}</span>
+                    <span class="sub">{e.role}</span>
+                  </div>
+                ),
+              )
+            }
+          </div>
+        </div>
+        <div>
+          <div class="sec-head"><h2>Education</h2></div>
+          <div class="rows">
+            {
+              education.map((e) => (
+                <div>
+                  <strong>{e.org}</strong>
+                  <span class="when mono">{e.when}</span>
+                  <span class="sub">{e.role}</span>
+                </div>
+              ))
+            }
+          </div>
+          <div class="sec-head" style="margin-top:2.25rem"><h2>More work</h2></div>
+          <div class="rows">
+            {
+              moreWork.map((m) =>
+                m.href ? (
+                  <a href={m.href}>
+                    <strong>{m.title}</strong>
+                    <span class="sub">{m.text}</span>
+                  </a>
+                ) : (
+                  <div>
+                    <strong>{m.title}</strong>
+                    <span class="sub">{m.text}</span>
+                  </div>
+                ),
+              )
+            }
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-head"><h2>What I work with</h2></div>
+      <div class="stack">
+        {
+          stack.map((s) => (
+            <div>
+              <h3>{s.group}</h3>
+              <ul class="mono">
+                {s.items.map((it) => (
+                  <li>{it}</li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="sec-head"><h2>About</h2></div>
+      <div class="about">
+        <p>
+          I like owning a problem from the model to the interface a person actually uses. In the last year that has
+          meant a production platform for universities, three hackathon builds this fall, and a machine learning project
+          I led with a team of seven.
+        </p>
+        <p>
+          I grew up in India and did a BCA with an AI specialization at Bennett University. I am now in Canada for the
+          Master of Management in Analytics at McGill, which adds the business and data side to the engineering.
+        </p>
+        <p>
+          I am looking for an AI/ML engineering, data engineering or software role, as an internship or full time, in
+          Toronto or remote in Canada.
+        </p>
+      </div>
+    </section>
+
+    <section id="contact" class="contact">
+      <h2>Have a role in mind? Let's talk.</h2>
+      <p class="lede">
+        The fastest way to reach me is <a href={`mailto:${site.email}`}>{site.email}</a>.
+      </p>
+      <div class="actions">
+        <a class="btn primary" href={`mailto:${site.email}`}>Email me</a>
+        <a class="btn" href={site.linkedin}>LinkedIn</a>
+        <a class="btn" href={site.github}>GitHub</a>
+      </div>
+    </section>
+  </div>
+</Base>
