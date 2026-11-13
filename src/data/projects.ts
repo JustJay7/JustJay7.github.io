@@ -43,12 +43,12 @@ export const projects: Project[] = [
     summary:
       "AsOf checks each policy claim in an AI assistant's answer against the policy version that was in force on the customer's date, stops answers that contradict it, and keeps a tamper-evident record of every decision.",
     when: 'Nov 2026',
-    builtFor: 'IBM Db2Hack 2026, solo',
+    builtFor: 'IBM Db2Hack 2026 finalist, solo',
     outcome: '0 of 65 wrong drafts released on blind sets',
     tone: 'ok',
     facts: [
       { label: 'Role', value: 'Solo build' },
-      { label: 'Context', value: 'IBM Db2Hack 2026, November 2026' },
+      { label: 'Context', value: 'IBM Db2Hack 2026 finalist (top 15), November 2026' },
       { label: 'Stack', value: 'IBM Db2 12.1, SQL PL, LangGraph, LangChain, Python' },
       { label: 'Outcome', value: '1,331 tests. 0 of 65 wrong drafts released on blind test sets.' },
     ],
